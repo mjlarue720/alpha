@@ -21,12 +21,12 @@ class Util {
   }
 
   /**
-   * Execute a shell command on input data and return the output
+   * Execute a shell pipe command on input data and return the output
    * @param command shell command
    * @param data input data
    * @return command stdout output
    */
-  public static String execute(String command, String data){
+  public static String executePipe(String command, String data){
     Process proc = command.execute()
     PrintWriter writer = new PrintWriter(new BufferedOutputStream(proc.out))
     writer.println(data)
@@ -34,6 +34,4 @@ class Util {
     proc.waitFor()
     return proc.getText()
   }
-
-
 }

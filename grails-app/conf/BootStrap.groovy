@@ -1,4 +1,5 @@
 import java.util.logging.Logger
+import alpha.AppControl
 
 class BootStrap {
 
@@ -7,12 +8,16 @@ class BootStrap {
 
   def init = { servletContext ->
 
-    if(alpha.AppControl.firstBoot()){
+    if(AppControl.firstBoot()){
       //log.info("Alpha bootrap: new start ${new Date()}")
       println("Alpha bootrap: new start ${new Date()}")
+      AppControl appControl = AppControl.getSingleton()
+      appControl.guaranteeCounter("starts")
     }
     //log.info("Alpha bootrap: startup complete ${new Date()}")
-    println("Alpha bootrap: startup complete ${new Date()}")
+    AppControl appControl = AppControl.getSingleton()
+    Long startCount = appControl.counterNext("starts")
+    println("Alpha bootrap: startup ${startCount} complete ${new Date()}")
   }
 
 
