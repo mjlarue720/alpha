@@ -1,5 +1,6 @@
 package alpha
 
+import groovy.json.JsonSlurper
 /**
  * Created with IntelliJ IDEA.
  * User: gvamos
@@ -34,4 +35,19 @@ class Util {
     proc.waitFor()
     return proc.getText()
   }
+  
+  public static String geoCode(String address) {
+      
+    String googleMapApiBase = "http://maps.googleapis.com/maps/api/geocode/json?address="    
+    String googleMapApiSensorComponent = "&sensor=false"
+    String path = googleMapApiBase + address.replace(" ", "+") + googleMapApiSensorComponent
+    URL url = new URL(path)
+    JsonSlurper jsonSlurper = new JsonSlurper()
+    def result = jsonSlurper.parseText(url.getText())
+    print result.results.geometry.location
+    return result.results.geometry.location    
+        
+  }
+    
+  
 }
